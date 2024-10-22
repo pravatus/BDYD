@@ -39,7 +39,8 @@ handle_height=door_leaf_hight/6*3;
 echo("handle_height",handle_height);
 door_frame_post_height=door_leaf_hight+door_frame_width;
 echo("door_frame_post_height",door_frame_post_height);
-
+door_frame_top_width=door_leaf_width+door_frame_width*2;
+echo("door_frame_top_width",door_frame_top_width);
 
 // add y and z door wiggle later
 module door_base_geom() {
@@ -136,38 +137,33 @@ module door() {
 }
 
 module posts() {
-    door_frame_post_inner_width=door_frame_width;
+    door_frame_post_inner_width=door_frame_width+mesh_fix;
     door_frame_post_inner_depth=door_leaf_inside_thickness;
     translate([door_leaf_outside_thickness,door_leaf_width,-mesh_fix]) 
-        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix]);
+        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix*2]);
     translate([door_leaf_outside_thickness,-door_frame_post_inner_width,-mesh_fix]) 
-        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix]);
+        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix*2]);
 
-    door_frame_post_outer_width=door_frame_width+door_leaf_inset;
+    door_frame_post_outer_width=door_frame_width+door_leaf_inset+mesh_fix;
     door_frame_post_outer_depth=door_leaf_outside_thickness;
     translate([0,door_leaf_width-door_leaf_inset,-mesh_fix]) 
-        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix]);
+        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix*2]);
     translate([0,-door_frame_post_inner_width,-mesh_fix]) 
-        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix]);
+        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix*2]);
 
-    door_frame_top_width=door_leaf_width+door_frame_width*2;
-    door_frame_top_outer_depth=door_leaf_outside_thickness;
-    translate([0,-door_frame_width,door_leaf_hight-door_leaf_inset]) 
-        cube([door_leaf_outside_thickness,door_frame_top_width,door_frame_post_outer_width]);
+    translate([0,-door_frame_width-mesh_fix/2,door_leaf_hight-door_leaf_inset]) 
+        cube([door_leaf_outside_thickness,door_frame_top_width+mesh_fix,door_frame_post_outer_width]);
 
-    door_frame_top_inner_width=door_leaf_width+door_frame_width*2;
-    door_frame_top_inner_depth=door_leaf_inside_thickness;
     door_frame_top_inner_height=door_frame_post_outer_width-door_leaf_inset;
-    translate([door_leaf_outside_thickness,-door_frame_width,door_leaf_hight]) 
-        cube([door_leaf_inside_thickness,door_frame_top_width,door_frame_top_inner_height]);
+    translate([door_leaf_outside_thickness,-door_frame_width-mesh_fix/2,door_leaf_hight]) 
+        cube([door_leaf_inside_thickness,door_frame_top_width+mesh_fix,door_frame_top_inner_height]);
 }
 
-// frame -mesh_fix so it unions
+// punches hole in wall
 module door_hole_punch() {
-    translate([0,0,door_frame_post_height/2-mesh_fix]) 
-        cuboid([1,door_leaf_width+door_frame_width*2-mesh_fix,door_frame_post_height]);
+    translate([0,0,door_frame_post_height/2]) 
+        cuboid([1,door_frame_top_width,door_frame_post_height]);
 }
-//door_hole_punch();
 
 module door_collider() {
 translate([0,0,door_frame_post_height/2]) 
@@ -182,7 +178,6 @@ module door_led_punch() {
         door_leaf_width+door_frame_width*2+seam_depth*2,
         door_frame_post_height+seam_depth]);
 }
-//door_led_punch();
 
 module the_door() {
     translate([-door_frame_width/2,-door_leaf_width/2,0]) door();
@@ -196,7 +191,10 @@ module the_handle_collider() {
     translate([-door_frame_width/2,-door_leaf_width/2,0]) door_handle_grips();
 }
 
+// deliverables
 //door_collider();
+//door_hole_punch();
+//door_led_punch();
 //the_door();
-//the_posts();
 //the_handle_colliders();
+//the_posts();

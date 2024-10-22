@@ -13,6 +13,7 @@
 
 include <Constants.scad>
 
+// woofer
 woof_scale=0.1; // measurements are 10x
 woof_depth=6.2;
 woof_width=5.7;
@@ -35,6 +36,8 @@ echo ("woof_top_box_hole_height",woof_top_box_hole_height);
 woof_top_box_hole_depth=4;
 echo ("woof_top_box_hole_depth",woof_top_box_hole_depth);
 woof_seam_depth=0.05;
+
+// speaker
 
 module woof_base_geom() {
     prismoid([woof_depth, woof_width],[woof_depth, woof_width]

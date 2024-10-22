@@ -125,4 +125,33 @@ module door() {
     handles();
 }
 
+module posts() {
+    door_frame_post_inner_width=door_frame_width;
+    door_frame_post_height=door_leaf_hight+door_frame_width;
+    door_frame_post_inner_depth=door_leaf_inside_thickness;
+    translate([door_leaf_outside_thickness,door_leaf_width,-mesh_fix]) 
+        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix]);
+    translate([door_leaf_outside_thickness,-door_frame_post_inner_width,-mesh_fix]) 
+        cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix]);
+
+    door_frame_post_outer_width=door_frame_width+door_leaf_inset;
+    door_frame_post_outer_depth=door_leaf_outside_thickness;
+    translate([0,door_leaf_width-door_leaf_inset,-mesh_fix]) 
+        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix]);
+    translate([0,-door_frame_post_inner_width,-mesh_fix]) 
+        cube([door_frame_post_outer_depth,door_frame_post_outer_width,door_frame_post_height+mesh_fix]);
+
+    door_frame_top_width=door_leaf_width+door_frame_width*2;
+    door_frame_top_outer_depth=door_leaf_outside_thickness;
+    translate([0,-door_frame_width,door_leaf_hight-door_leaf_inset]) 
+        cube([door_leaf_outside_thickness,door_frame_top_width,door_frame_post_outer_width]);
+
+    door_frame_top_inner_width=door_leaf_width+door_frame_width*2;
+    door_frame_top_inner_depth=door_leaf_inside_thickness;
+    door_frame_top_inner_height=door_frame_post_outer_width-door_leaf_inset;
+    translate([door_leaf_outside_thickness,-door_frame_width,door_leaf_hight]) 
+        cube([door_leaf_inside_thickness,door_frame_top_width,door_frame_top_inner_height]);
+}
+
+//posts();
 //door();

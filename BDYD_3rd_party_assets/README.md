@@ -8,7 +8,8 @@
 
 ## OpenSCAD-related 3rd party assets notes
 
-Copy `Fonts/Orbitron/static/Orbitron-Regular.ttf` and `Fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf` to `%USERPROFILE%/.fonts/`
+- Copy `Fonts/Orbitron/static/Orbitron-Regular.ttf` and `Fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf` to `%USERPROFILE%/.fonts/`
+- Clone the [BOSL2] repo into this repositories' parent folder
 
 [BOSL2]: <https://github.com/BelfrySCAD/BOSL2.git>
 [OpenSCAD]: <https://openscad.org/downloads.html>

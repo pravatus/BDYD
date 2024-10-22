@@ -1,8 +1,4 @@
-include <../BOSL2/std.scad>
-
-$fn = 30; // segments in a circle (360/30 = 12 degrees)
-
-phi=(1 + sqrt(5)) / 2;
+include <Constants.scad>
 
 door_leaf_width=0.90;
 door_leaf_hight=2.04;
@@ -15,7 +11,6 @@ horizontal_line_width=door_frame_width;
 horizontal_line_height=0.001;
 default_chamfer=0.002;
 handle_width=0.04;
-mesh_fix=0.002;
 
 door_leaf_outside_width=door_leaf_width-door_leaf_inset*2-door_wiggle*2;
 echo("door_leaf_outside_width",door_leaf_outside_width);
@@ -29,6 +24,8 @@ horizontal_line_spacing=door_leaf_hight/(horizontal_lines+1);
 echo("horizontal_line_spacing",horizontal_line_spacing);
 handle_height=door_leaf_hight/6*3;
 echo("handle_height",handle_height);
+door_frame_post_height=door_leaf_hight+door_frame_width;
+echo("door_frame_post_height",door_frame_post_height);
 
 
 // add y and z door wiggle later
@@ -127,7 +124,6 @@ module door() {
 
 module posts() {
     door_frame_post_inner_width=door_frame_width;
-    door_frame_post_height=door_leaf_hight+door_frame_width;
     door_frame_post_inner_depth=door_leaf_inside_thickness;
     translate([door_leaf_outside_thickness,door_leaf_width,-mesh_fix]) 
         cube([door_frame_post_inner_depth,door_frame_post_inner_width,door_frame_post_height+mesh_fix]);
@@ -153,5 +149,41 @@ module posts() {
         cube([door_leaf_inside_thickness,door_frame_top_width,door_frame_top_inner_height]);
 }
 
-//posts();
-//door();
+// frame -mesh_fix so it unions
+module door_hole_punch() {
+    translate([0,0,door_frame_post_height/2-mesh_fix]) 
+        cuboid([1,door_leaf_width+door_frame_width*2-mesh_fix,door_frame_post_height]);
+}
+//door_hole_punch();
+
+module door_collider() {
+translate([0,0,door_frame_post_height/2]) 
+    cuboid([door_frame_width,
+        door_leaf_width+door_frame_width*2,
+        door_frame_post_height]);
+}
+
+module door_led_punch() {
+    translate([0,0,door_frame_post_height/2+seam_depth/2]) 
+    cuboid([seam_width,
+        door_leaf_width+door_frame_width*2+seam_depth*2,
+        door_frame_post_height+seam_depth]);
+}
+//door_led_punch();
+
+module the_door() {
+    translate([-door_frame_width/2,-door_leaf_width/2,0]) door();
+}
+
+module the_posts() {
+    translate([-door_frame_width/2,-door_leaf_width/2,0]) posts();
+}
+
+module the_handle_collider() {
+    translate([-door_frame_width/2,-door_leaf_width/2,0]) door_handle_grips();
+}
+
+//door_collider();
+//the_door();
+//the_posts();
+//the_handle_colliders();

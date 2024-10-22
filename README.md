@@ -2,4 +2,4 @@
 
 Club BDYD? source code. 
 
-Pronounced "but did you die?"
+Stands for "but did you die?". Name subject to change maybe? idk

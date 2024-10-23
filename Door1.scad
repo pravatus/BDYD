@@ -102,7 +102,7 @@ module door_handle_grips() {
 module handles() {
     difference() {
         translate([door_leaf_thickness/2
-            ,door_leaf_width/5 //+door_wiggle
+            ,door_leaf_width/5+door_wiggle // causes eight (8) verts to overlap
             ,door_leaf_hight/4+handle_height/10]) 
             rect_tube(size=[door_leaf_thickness*3-default_chamfer*4+handle_width,door_leaf_thickness*2+handle_width]
                 ,wall=handle_width/2-default_chamfer*4
@@ -112,7 +112,7 @@ module handles() {
     }
     difference() {
         translate([door_leaf_thickness/2
-            ,door_leaf_width/5 //+door_wiggle
+            ,door_leaf_width/5+door_wiggle // causes eight (8) verts to overlap
             ,door_leaf_hight/4*3-handle_width/2+default_chamfer*2-handle_height/10]) 
             rect_tube(size=[door_leaf_thickness*3-default_chamfer*4+handle_width,door_leaf_thickness*2+handle_width]
                 ,wall=handle_width/2-default_chamfer*4
@@ -195,6 +195,6 @@ module the_handle_collider() {
 //door_collider();
 //door_hole_punch();
 //door_led_punch();
-//the_door();
+//the_door(); // 16 overlapping verts
 //the_handle_colliders();
 //the_posts();

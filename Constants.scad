@@ -14,7 +14,7 @@
 include <../BOSL2/std.scad>
 
 $fn = 30; // segments in a circle (360/30 = 12 degrees)
-//$fn = 8;
+//$fn = 8; // low poly truss
 
 phi=(1 + sqrt(5)) / 2;
 

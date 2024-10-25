@@ -280,6 +280,31 @@ module rigged_woofers() {
     translate([0,woof_height/2,-woof_width*1.5-0.65-0.05]) rotate([90,0,0]) woof();
 }
 
+module unrigged_woofers() {
+    translate([0,woof_height/2,-woof_width/2-0.65]) rotate([90,0,0]) woof();
+    translate([0,woof_height/2,-woof_width*1.5-0.65-0.05]) rotate([90,0,0]) woof();
+}
+
+module unrigged_speakers() {
+    speak_angle=5.877;
+
+    translate([0,0,-0.65])
+        rotate([0,speak_angle,0])
+            translate([0,-speak_height/2,-1.575])
+                rotate([-90,0,0])
+                    speak();
+    translate([0,0,-0.65])
+        rotate([0,speak_angle*3,0])
+            translate([0.64,-speak_height/2,-4.707])
+                rotate([-90,0,0])
+                    speak();
+    translate([0,0,-0.65])
+        rotate([0,speak_angle*5,0])
+            translate([1.91,-speak_height/2,-7.641])
+                rotate([-90,0,0])
+                    speak();
+}
+
 // deliverables
 //scale(woof_scale) rigged_woofers();
 //scale(woof_scale) rigged_speakers();

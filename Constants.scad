@@ -18,7 +18,30 @@ $fn = 30; // segments in a circle (360/30 = 12 degrees)
 
 phi=(1 + sqrt(5)) / 2;
 
+corridor_height=4;
+corridor_width=2.5;
 mesh_fix=0.002;
 seam_depth=0.005;
 seam_width=0.02;
+wall_size_inner=12;
 wall_thickness=0.2;
+rail_led_width=0.2;
+
+wall_height=corridor_height+2*wall_thickness;
+echo("wall_height",wall_height);
+wall_rounding_inner=wall_size_inner/6;
+echo("wall_rounding_inner",wall_rounding_inner);
+wall_rounding_outer=wall_rounding_inner+corridor_width+wall_thickness;
+echo("wall_rounding_outer",wall_rounding_outer);
+wall_size_outer=wall_size_inner+corridor_width*2+wall_thickness*2;
+echo("wall_size_outer",wall_size_outer);
+
+window_height=corridor_height/2;
+echo ("window_height",window_height);
+
+floor_width=corridor_width+2*wall_thickness;
+echo("floor_width",floor_width);
+floor_rounding_inner=wall_rounding_inner-wall_thickness;
+echo("floor_rounding_inner",floor_rounding_inner);
+
+abyss_depth=30;

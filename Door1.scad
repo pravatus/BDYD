@@ -162,7 +162,7 @@ module posts() {
 // punches hole in wall
 module door_hole_punch() {
     translate([0,0,door_frame_post_height/2]) 
-        cuboid([1,door_frame_top_width,door_frame_post_height]);
+        cuboid([2,door_frame_top_width,door_frame_post_height]);
 }
 
 module door_collider() {
@@ -174,9 +174,9 @@ translate([0,0,door_frame_post_height/2])
 
 module door_led_punch() {
     translate([0,0,door_frame_post_height/2+seam_depth/2]) 
-    cuboid([seam_width,
-        door_leaf_width+door_frame_width*2+seam_depth*2,
-        door_frame_post_height+seam_depth]);
+        cuboid([seam_width,
+            door_leaf_width+door_frame_width*2+seam_depth*2,
+            door_frame_post_height+seam_depth]);
 }
 
 module the_door() {

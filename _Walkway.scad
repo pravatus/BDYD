@@ -22,6 +22,31 @@ module outer_wall_geom() {
         ,wall=wall_thickness
         ,rounding=wall_rounding_outer
         ,h=wall_height);
+
+    // creates issues
+    outer_wall_slope();
+}
+
+module outer_wall_slope() {
+    translate([0,0,-mesh_fix]) 
+        rect_tube(size1=[wall_size_outer,wall_size_outer] // bottom
+            ,size2=[wall_size_outer,wall_size_outer] // top
+            ,isize1=[wall_size_outer-wall_thickness*4,wall_size_outer-wall_thickness*4]
+            ,isize2=[wall_size_outer-wall_thickness*2+0.05,wall_size_outer-wall_thickness*2+0.05],
+            ,wall=wall_thickness*2
+            ,rounding=wall_rounding_outer
+            ,h=wall_thickness*4);
+}
+
+module outer_wall_slope_seam_cutout() {
+    translate([0,0,-mesh_fix-seam_depth]) 
+        rect_tube(size1=[wall_size_outer,wall_size_outer] // bottom
+            ,size2=[wall_size_outer,wall_size_outer] // top
+            ,isize1=[wall_size_outer-wall_thickness*4+seam_depth*2,wall_size_outer-wall_thickness*4+seam_depth*2]
+            ,isize2=[wall_size_outer-wall_thickness*2+0.05+seam_depth*2,wall_size_outer-wall_thickness*2+0.05+seam_depth*2],
+            ,wall=wall_thickness*2
+            ,rounding=wall_rounding_outer
+            ,h=wall_thickness*4);
 }
 
 module outer_wall_cutouts() {
@@ -93,7 +118,7 @@ module outer_wall_assembly() {
     }
     
     // SLOW
-    outer_wall_extras();
+    //outer_wall_extras();
 }
 
 module inner_wall_outer_layer() {
@@ -186,13 +211,20 @@ module inner_wall_assembly() {
     rotate([0,0,-90]) sconce2();
 }
 
-module seams() {
+module seams_geom() {
     seam();
     rotate([0,0,90]) seam();
     rotate([0,0,180]) seam();
     rotate([0,0,-90]) seam();
 }
 
+
+module seams() {
+    difference() {
+        seams_geom();
+        outer_wall_slope_seam_cutout();
+    }
+}
 
 // abyss cutout stuff
 module abyss_led_seam_2d() {
@@ -265,7 +297,7 @@ module walkway_geom() {
     inner_wall_assembly();
     outer_wall_assembly(); 
     walkway_floor();
-    walkway_ceiling();
+    //walkway_ceiling();
 }
 
 module walkway_assembly() {
@@ -276,4 +308,4 @@ module walkway_assembly() {
 }
 
 //the_abyss();
-//walkway_assembly();
+walkway_assembly();

@@ -26,6 +26,7 @@ seam_width=0.02;
 wall_size_inner=12;
 wall_thickness=0.2;
 rail_led_width=0.2;
+stair_run=0.22;
 
 wall_height=corridor_height+2*wall_thickness;
 echo("wall_height",wall_height);
@@ -45,3 +46,15 @@ floor_rounding_inner=wall_rounding_inner-wall_thickness;
 echo("floor_rounding_inner",floor_rounding_inner);
 
 abyss_depth=30;
+
+// room 103
+room103_walkway_width=2.0;
+room103_walkway_step_height=0.2;
+room103_walkway_steps=4;
+room103_walkway_height=room103_walkway_steps*room103_walkway_step_height;
+echo("room103_walkway_height",room103_walkway_height);
+room103_wall_rounding_outer1=wall_size_inner/4;
+echo("room103_wall_rounding_outer1",room103_wall_rounding_outer1);
+room103_wall_rounding_outer2=wall_rounding_inner+corridor_width+wall_thickness;
+echo("room103_wall_rounding_outer2",room103_wall_rounding_outer2);
+

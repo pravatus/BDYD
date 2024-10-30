@@ -12,9 +12,11 @@
 // <https://www.gnu.org/licenses/>. 
 
 include <../BOSL2/std.scad>
-include <../BOSL2/turtle3d.scad>
 
 $fn=8; // low poly truss
+
+truss_alignment_rot_deg=360/$fn/2; // $fn=8, 4
+//truss_alignment_rot_deg=360/$fn; // $fn=6
 
 truss_scale=0.01;
 truss_chord_spacing=30;
@@ -38,29 +40,29 @@ module truss_part() {
     // chords
     translate([0,0,-truss_final_height/2]) // set to zero
         ycopies(l=truss_chord_spacing, n=2) xcopies(l=truss_chord_spacing, n=2) 
-            rotate([0,0,360/$fn/2]) // align for 8
+            rotate([0,0,truss_alignment_rot_deg]) // align for 8
                 cylinder(h=truss_final_height, r=truss_chord_diameter);
 
     // horizontal members
     translate([truss_chord_spacing/2,truss_chord_spacing/2,0]) // set to 0
         zcopies(l=truss_height, n=4) rotate([90,0,0]) 
-            rotate([0,0,360/$fn/2]) // align for 8
+            rotate([0,0,truss_alignment_rot_deg]) // align for 8
                 cylinder(h=truss_chord_spacing, r=truss_member_diagonal_diameter);
 
     translate([-truss_chord_spacing/2,truss_chord_spacing/2,0]) // set to 0
         zcopies(l=truss_height, n=4) rotate([90,0,0]) 
-            rotate([0,0,360/$fn/2]) // align for 8
+            rotate([0,0,truss_alignment_rot_deg]) // align for 8
                 cylinder(h=truss_chord_spacing, r=truss_member_diagonal_diameter);
         
     // horizontal members
     translate([-truss_chord_spacing/2,truss_chord_spacing/2,0]) // set to 0
         zcopies(l=truss_height, n=4) rotate([0,90,0]) 
-            rotate([0,0,360/$fn/2]) // align for 8
+            rotate([0,0,truss_alignment_rot_deg]) // align for 8
                 cylinder(h=truss_chord_spacing, r=truss_member_diagonal_diameter);
 
     translate([-truss_chord_spacing/2,-truss_chord_spacing/2,0]) // set to 0
         zcopies(l=truss_height, n=7) rotate([0,90,0]) 
-            rotate([0,0,360/$fn/2]) // align for 8
+            rotate([0,0,truss_alignment_rot_deg]) // align for 8
                 cylinder(h=truss_chord_spacing, r=truss_member_diagonal_diameter);
 
     // ladder 1
@@ -68,7 +70,7 @@ module truss_part() {
         translate([0,0,-0.5]) // offset
             xcopies(l=truss_chord_spacing, n=2) zcopies(l=truss_diagonal_members_z_spacing, n=3)
                 rotate([45,0,0]) 
-                    rotate([0,0,360/$fn/2]) // align for 8
+                    rotate([0,0,truss_alignment_rot_deg]) // align for 8
                         cylinder(h=truss_diagonal_ladder_length, r=truss_member_diagonal_diameter);
 
     // ladder 2
@@ -76,7 +78,7 @@ module truss_part() {
         translate([0,0,0.5]) // offset
             xcopies(l=truss_chord_spacing, n=2) zcopies(l=truss_diagonal_members_z_spacing, n=3)
                 rotate([-45,0,0]) 
-                    rotate([0,0,360/$fn/2]) // align for 8
+                    rotate([0,0,truss_alignment_rot_deg]) // align for 8
                         cylinder(h=truss_diagonal_ladder_length, r=truss_member_diagonal_diameter);
 }
 
@@ -85,7 +87,7 @@ module bolt_plates() {
     ycopies(l=truss_chord_spacing, n=2) 
         hull() { 
             xcopies(l=truss_chord_spacing, n=2) 
-                rotate([0,0,360/$fn/2]) // align for 8
+                rotate([0,0,truss_alignment_rot_deg]) // align for 8
                     cylinder(h=truss_member_diagonal_diameter, r=truss_chord_diameter);
         }
 
@@ -93,7 +95,7 @@ module bolt_plates() {
     xcopies(l=truss_chord_spacing, n=2) 
         hull() { 
             ycopies(l=truss_chord_spacing, n=2) 
-                rotate([0,0,360/$fn/2]) // align for 8
+                rotate([0,0,truss_alignment_rot_deg]) // align for 8
                     cylinder(h=truss_member_diagonal_diameter, r=truss_chord_diameter);
         }
 
@@ -102,7 +104,7 @@ module bolt_plates() {
         ycopies(l=truss_chord_spacing, n=2) 
             hull() { 
                 xcopies(l=truss_chord_spacing, n=2) 
-                    rotate([0,0,360/$fn/2]) // align for 8
+                    rotate([0,0,truss_alignment_rot_deg]) // align for 8
                         cylinder(h=truss_member_diagonal_diameter, r=truss_chord_diameter);
             }
 
@@ -110,7 +112,7 @@ module bolt_plates() {
         xcopies(l=truss_chord_spacing, n=2) 
             hull() { 
                 ycopies(l=truss_chord_spacing, n=2) 
-                    rotate([0,0,360/$fn/2]) // align for 8
+                    rotate([0,0,truss_alignment_rot_deg]) // align for 8
                         cylinder(h=truss_member_diagonal_diameter, r=truss_chord_diameter);
             }
 }

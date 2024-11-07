@@ -57,4 +57,5 @@ room103_wall_rounding_outer1=wall_size_inner/4;
 echo("room103_wall_rounding_outer1",room103_wall_rounding_outer1);
 room103_wall_rounding_outer2=wall_rounding_inner+corridor_width+wall_thickness;
 echo("room103_wall_rounding_outer2",room103_wall_rounding_outer2);
-
+room_103_outer_wall_slope_height=wall_thickness*4;
+echo("room_103_outer_wall_slope_height",room_103_outer_wall_slope_height);

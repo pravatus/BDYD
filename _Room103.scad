@@ -136,7 +136,7 @@ module outer_wall_extras() {
 module room103_geom() {
     outer_wall_geom();
     floor_geom();
-    ceiling_assembly();
+    //ceiling_assembly();
 }
 
 module ceiling_geom() {
@@ -175,12 +175,12 @@ module room103_assembly() {
         outer_wall_cutouts();
 
         // SLOW
-        mirror([0,1,0]) rotate([0,0,90]) led_seam();
-        floor_cutouts();
+        //mirror([0,1,0]) rotate([0,0,90]) led_seam();
+        //floor_cutouts();
     }
     
     // SLOW
-    outer_wall_extras();
+    //outer_wall_extras();
 }
 
 module floor_cutouts() {
@@ -396,4 +396,4 @@ module rail_light() {
         ,h=seam_depth);
 }
 
-//room103_assembly();
+room103_assembly();

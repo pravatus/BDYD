@@ -14,6 +14,7 @@
 include <Constants.scad>
 include <Door1.scad>
 include <WallSconce2.scad>
+include <Room103Couch.scad>
 
 module outer_wall_geom() {
     rect_tube(size=wall_size_outer,wall=wall_thickness
@@ -136,7 +137,7 @@ module outer_wall_extras() {
 module room103_geom() {
     outer_wall_geom();
     floor_geom();
-    ceiling_assembly();
+    //ceiling_assembly();
 }
 
 module ceiling_geom() {
@@ -180,6 +181,7 @@ module room103_assembly() {
     }
     
     // SLOW
+    couch_base_geom();
     outer_wall_extras();
 }
 

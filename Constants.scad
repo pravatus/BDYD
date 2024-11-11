@@ -12,6 +12,8 @@
 // <https://www.gnu.org/licenses/>. 
 
 include <../BOSL2/std.scad>
+include <../BOSL2/turtle3d.scad>
+include <../BOSL2/skin.scad>
 
 $fn = 30; // segments in a circle (360/30 = 12 degrees)
 //$fn = 8; // low poly truss

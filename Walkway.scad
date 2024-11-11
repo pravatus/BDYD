@@ -23,7 +23,7 @@ module outer_wall_geom() {
         ,rounding=wall_rounding_outer
         ,h=wall_height);
 
-    // creates issues
+    // creates issues fixed with Decimate > Planar in Blender
     outer_wall_slope();
 }
 
@@ -270,7 +270,6 @@ module abyss_stamped() {
             abyss_led_seams_2d();
     }
 }
-//abyss_stamped();
 
 module endcap_stamped() {
     difference() {
@@ -305,7 +304,28 @@ module walkway_assembly() {
         walkway_geom();
         seams();
     }
+    walkway_rail();
 }
 
-//the_abyss();
+walkway_railing_offset=wall_thickness/2;
+echo ("walkway_railing_offset", walkway_railing_offset);
+
+module walkway_rail() {
+    path = turtle3d([
+        "move",wall_size_inner/2-wall_rounding_inner 
+        ,"arcright",wall_rounding_inner+walkway_railing_offset
+        ,"move",wall_size_inner-wall_rounding_inner*2
+        ,"arcright",wall_rounding_inner+walkway_railing_offset
+        ,"move",wall_size_inner-wall_rounding_inner*2
+        ,"arcright",wall_rounding_inner+walkway_railing_offset
+        ,"move",wall_size_inner-wall_rounding_inner*2
+        ,"arcright",wall_rounding_inner+walkway_railing_offset
+        ],transforms=true,$fn=8);
+    
+    translate([0,wall_size_inner/2,0.9]) // center & lift
+    translate([0,wall_thickness/2,0]) // ?
+    sweep(rect([handle_width/2,handle_width],chamfer=default_chamfer),path,closed=true);
+}
+
 //walkway_assembly();
+//the_abyss();

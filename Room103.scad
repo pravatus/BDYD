@@ -124,20 +124,15 @@ module outer_wall_cutouts() {
 }
 
 module outer_wall_extras() {
-    // posts
     translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) the_posts();   
- 
-    // door
     translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) the_door();
-    
-    // TODO: sconces
     sconces();
 }
 
 module room103_geom() {
     outer_wall_geom();
     floor_geom();
-    //ceiling_assembly();
+    ceiling_assembly();
 }
 
 module ceiling_geom() {
@@ -168,21 +163,6 @@ module floor_geom() {
             ,h=wall_thickness*2); // +1 wall because cutouts
         walkway_n_floor_cutout_geom();
     }
-}
-
-module room103_assembly() {
-    difference() {
-        room103_geom();
-        outer_wall_cutouts();
-
-        // SLOW
-        mirror([0,1,0]) rotate([0,0,90]) led_seam();
-        floor_cutouts();
-    }
-    
-    // SLOW
-    couch_base_geom();
-    outer_wall_extras();
 }
 
 module floor_cutouts() {
@@ -396,6 +376,91 @@ module rail_light() {
         ,wall=rail_led_width
         ,rounding=[rail_light2_rounding,rail_light1_rounding,rail_light1_rounding,rail_light1_rounding]
         ,h=seam_depth);
+}
+
+module room103_rail1() {
+    path = turtle3d([
+        "move",wall_thickness 
+        ,"arcup",wall_thickness // handle
+        ,"arcup",wall_thickness
+        ,"move", wall_size_outer/2-room103_walkway_width // center
+            -wall_size_inner/8 // door center
+            -(door_leaf_width+door_frame_width*2)/2 //door frame
+            -wall_thickness // mud
+            -(room103_wall_rounding_outer1-room103_walkway_width-wall_thickness) // arc
+            -stair_run*5 // stairs
+        ,"arcleft", room103_wall_rounding_outer1-room103_walkway_width-wall_thickness/2
+        ,"move", wall_size_inner-wall_thickness*3
+        ,"arcleft", room103_wall_rounding_outer1-room103_walkway_width-wall_thickness/2 // curve
+        ,"move", wall_size_outer/2-room103_walkway_width // center
+            -wall_size_inner/8 // door center
+            -(door_leaf_width+door_frame_width*2)/2 //door frame
+            -wall_thickness // mud
+            -(room103_wall_rounding_outer1-room103_walkway_width-wall_thickness)
+            -stair_run*5
+        ,"arcup",wall_thickness
+        ,"arcup",wall_thickness
+        ,"move",wall_thickness
+    ],transforms=true,$fn=8);
+
+    translate([wall_size_outer/2,-wall_size_inner/8,0]) // where our door is at 
+    translate([-room103_walkway_width-wall_thickness,0,1.3]) // 0 on the stair edge includes 0.4+0.9m rail h
+    translate([0,(-door_leaf_width-door_frame_width*2)/2,0]) // clear door
+    translate([0,-wall_thickness,0]) // clear mud room
+    translate([wall_thickness/2,-stair_run*5,0]) // clear stairs
+        rotate([0,0,90])
+            sweep(rect([handle_width/2,handle_width],chamfer=default_chamfer),path);
+}
+
+module room103_rail2() {
+    path2 = turtle3d([
+        "move",wall_thickness 
+        ,"arcup",wall_thickness //handle
+        ,"arcup",wall_thickness
+        ,"move", wall_size_outer/2-room103_walkway_width // center
+        +wall_size_inner/8 // door center
+            -(door_leaf_width+door_frame_width*2)/2 //door frame
+            -wall_thickness // mud
+            -(room103_wall_rounding_outer2-room103_walkway_width-wall_thickness) // arc
+            -stair_run*5 // stairs
+        ,"arcright", room103_wall_rounding_outer2-room103_walkway_width-wall_thickness/2
+        ,"move", wall_size_inner-wall_thickness*3-room103_wall_rounding_outer2+room103_wall_rounding_outer1
+        ,"arcright", room103_wall_rounding_outer1-room103_walkway_width-wall_thickness/2 // curve
+        ,"move", wall_size_outer/2-room103_walkway_width // center
+            +wall_size_inner/8 // door center
+            -(door_leaf_width+door_frame_width*2)/2 //door frame
+            -wall_thickness // mud
+            -(room103_wall_rounding_outer1-room103_walkway_width-wall_thickness)
+            -stair_run*5
+        ,"arcup",wall_thickness
+        ,"arcup",wall_thickness
+        ,"move",wall_thickness
+    ],transforms=true,$fn=8);
+
+    translate([wall_size_outer/2,-wall_size_inner/8,0]) // where our door is at 
+    translate([-room103_walkway_width-wall_thickness,0,1.3]) // 0 on the stair edge includes 0.4+0.9m rail h
+    translate([0,(+door_leaf_width+door_frame_width*2)/2,0]) // clear door
+    translate([0,+wall_thickness,0]) // clear mud room
+    translate([wall_thickness/2,+stair_run*5,0]) // clear stairs-ish
+        rotate([0,0,270]) 
+            sweep(rect([handle_width/2,handle_width],chamfer=default_chamfer),path2);
+}
+
+module room103_assembly() {
+    difference() {
+        room103_geom();
+        outer_wall_cutouts();
+
+        // SLOW
+        mirror([0,1,0]) rotate([0,0,90]) led_seam();
+        floor_cutouts();
+    }
+    
+    // SLOW
+    couch_base_geom();
+    outer_wall_extras();
+    room103_rail1();
+    room103_rail2();
 }
 
 //room103_assembly();

@@ -516,5 +516,6 @@ module room103_collider() {
     translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) door_collider();
 }
 
-//room103_collider(); 
 //room103_assembly();
+//room103_collider(); 
+//translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) the_handle_collider();

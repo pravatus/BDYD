@@ -24,7 +24,11 @@ module outer_wall_geom() {
             ,room103_wall_rounding_outer1]
         ,h=wall_height-wall_thickness);
     outer_wall_slope(); 
-    walkway_geom();
+}
+
+module outer_wall_geom_assembly() {
+    outer_wall_geom();
+    walkway_geom_assembly();
 }
 
 module sconces() {
@@ -84,21 +88,25 @@ module outer_wall_slope() {
 }
 
 module walkway_geom() {
+    rect_tube(size=wall_size_outer,wall=room103_walkway_width+wall_thickness
+        ,rounding=[room103_wall_rounding_outer2
+        ,room103_wall_rounding_outer1
+        ,room103_wall_rounding_outer1
+        ,room103_wall_rounding_outer1]
+        ,h=room103_walkway_height);
+}
+
+module walkway_geom_assembly() {
     difference() {
-        rect_tube(size=wall_size_outer,wall=room103_walkway_width+wall_thickness
-            ,rounding=[room103_wall_rounding_outer2
-                ,room103_wall_rounding_outer1
-                ,room103_wall_rounding_outer1
-                ,room103_wall_rounding_outer1]
-            ,h=room103_walkway_height);
-        assemble_walkway_cutout_geom();
+        walkway_geom();
+        assemble_walkway_cutout_geom_assembly();
     }
 }
 
-module assemble_walkway_cutout_geom() {
-    walkway_n_floor_cutout_geom();
-    walkway_cutout_geom();
-    mirror([1,0,0]) walkway_cutout_geom();
+module assemble_walkway_cutout_geom_assembly() {
+    walkway_n_floor_cutout_geom_assembly();
+    walkway_cutout_geom_assembly();
+    mirror([1,0,0]) walkway_cutout_geom_assembly();
 
     // led
     translate([0,0,room103_walkway_height-seam_width])
@@ -130,7 +138,7 @@ module outer_wall_extras() {
 }
 
 module room103_geom() {
-    outer_wall_geom();
+    outer_wall_geom_assembly();
     floor_geom();
     ceiling_assembly();
 }
@@ -161,14 +169,31 @@ module floor_geom() {
                 ,room103_wall_rounding_outer1
                 ,room103_wall_rounding_outer1]
             ,h=wall_thickness*2); // +1 wall because cutouts
+        walkway_n_floor_cutout_geom_assembly();
+    }
+}
+
+module floor_collider_geom() {
+    difference() {
+        translate([0,0,-wall_thickness]) prismoid(wall_size_outer,wall_size_outer
+            ,rounding=[room103_wall_rounding_outer2
+                ,room103_wall_rounding_outer1
+                ,room103_wall_rounding_outer1
+                ,room103_wall_rounding_outer1]
+            ,h=wall_thickness*2); // +1 wall because cutouts
         walkway_n_floor_cutout_geom();
     }
 }
 
+module floor_cutout_geom_assembly() {
+    floor_cutout_geom();
+    floor_cutout_led_geom();
+}
+
 module floor_cutouts() {
     difference() {
-        floor_cutout_geom();
-        outer_wall_geom();
+        floor_cutout_geom_assembly();
+        outer_wall_geom_assembly();
     }
 }
 
@@ -180,27 +205,11 @@ module floor_cutout_geom() {
             ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness
             ,except=[RIGHT,TOP,BOT,FRONT]);
 
-    // led strip
-    translate([wall_size_outer/4+wall_thickness/2-seam_depth/2
-        ,-wall_size_outer/4-wall_size_inner/4-window_height/3-seam_width+seam_depth/2-wall_thickness
-        ,wall_thickness/2])
-        cuboid([wall_size_outer/2+seam_depth,wall_size_outer/2+seam_depth,seam_width]
-            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness+seam_depth
-            ,except=[RIGHT,TOP,BOT,FRONT]);
-
     translate([-wall_size_outer/4-wall_thickness/2
         ,-wall_size_outer/4-wall_size_inner/4-window_height/3-seam_width-wall_thickness
         ,wall_thickness])
         cuboid([wall_size_outer/2,wall_size_outer/2,wall_thickness*2]
             ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness
-            ,except=[LEFT,TOP,BOT,FRONT]);
-
-    // led strip
-    translate([-wall_size_outer/4-wall_thickness/2+seam_depth/2
-        ,-wall_size_outer/4-wall_size_inner/4-window_height/3-seam_width+seam_depth/2-wall_thickness
-        ,wall_thickness/2])
-        cuboid([wall_size_outer/2+seam_depth,wall_size_outer/2+seam_depth,seam_width]
-            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness+seam_depth
             ,except=[LEFT,TOP,BOT,FRONT]);
 
     translate([wall_size_outer/4+wall_thickness/2
@@ -210,6 +219,31 @@ module floor_cutout_geom() {
             ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness
             ,except=[RIGHT,TOP,BOT,BACK]);
 
+    translate([-wall_size_outer/4-wall_thickness/2
+        ,wall_size_outer/4+window_height/3+seam_width+wall_thickness
+        ,wall_thickness])
+        cuboid([wall_size_outer/2,wall_size_outer/2,wall_thickness*2]
+            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness
+            ,except=[LEFT,TOP,BOT,BACK]);
+}
+
+module floor_cutout_led_geom() {
+    // led strip
+    translate([wall_size_outer/4+wall_thickness/2-seam_depth/2
+        ,-wall_size_outer/4-wall_size_inner/4-window_height/3-seam_width+seam_depth/2-wall_thickness
+        ,wall_thickness/2])
+        cuboid([wall_size_outer/2+seam_depth,wall_size_outer/2+seam_depth,seam_width]
+            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness+seam_depth
+            ,except=[RIGHT,TOP,BOT,FRONT]);
+    
+    // led strip
+    translate([-wall_size_outer/4-wall_thickness/2+seam_depth/2
+        ,-wall_size_outer/4-wall_size_inner/4-window_height/3-seam_width+seam_depth/2-wall_thickness
+        ,wall_thickness/2])
+        cuboid([wall_size_outer/2+seam_depth,wall_size_outer/2+seam_depth,seam_width]
+            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness+seam_depth
+            ,except=[LEFT,TOP,BOT,FRONT]);
+    
     // led strip
     translate([wall_size_outer/4+wall_thickness/2-seam_depth/2
         ,wall_size_outer/4+window_height/3+seam_width+wall_thickness-seam_depth/2
@@ -217,14 +251,7 @@ module floor_cutout_geom() {
         cuboid([wall_size_outer/2+seam_depth,wall_size_outer/2+seam_depth,seam_width]
             ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness+seam_depth
             ,except=[RIGHT,TOP,BOT,BACK]);
-
-    translate([-wall_size_outer/4-wall_thickness/2
-        ,wall_size_outer/4+window_height/3+seam_width+wall_thickness
-        ,wall_thickness])
-        cuboid([wall_size_outer/2,wall_size_outer/2,wall_thickness*2]
-            ,rounding=room103_wall_rounding_outer1-room103_walkway_width-wall_thickness
-            ,except=[LEFT,TOP,BOT,BACK]);
-
+    
     // led strip
     translate([-wall_size_outer/4-wall_thickness/2+seam_depth/2,
         wall_size_outer/4+window_height/3+seam_width+wall_thickness-seam_depth/2
@@ -243,8 +270,10 @@ module walkway_n_floor_cutout_geom() {
             ,door_frame_top_width+stair_run*4
             ,room103_walkway_height
     ]);
-    
-    // leds
+}
+
+module walkway_n_floor_cutout_geom_assembly() {
+    walkway_n_floor_cutout_geom();
     walkway_n_floor_led_cutout_geom();
 }
 
@@ -286,8 +315,10 @@ module walkway_cutout_geom() {
             ,door_frame_top_width+stair_run*10
             ,room103_walkway_height
     ]);
-    
-    // leds
+}
+
+module walkway_cutout_geom_assembly() {
+    walkway_cutout_geom();
     walkway_led_cutout_geom();
 }
 
@@ -463,4 +494,27 @@ module room103_assembly() {
     room103_rail2();
 }
 
+module room103_collider() {
+    difference() {
+        walkway_geom();
+        walkway_cutout_geom();
+        mirror([1,0,0]) walkway_cutout_geom();    
+    }
+    ceiling_geom();
+    difference() {   
+        outer_wall_geom();
+        // punch door hole
+        translate([wall_size_outer/2+-wall_thickness,-wall_size_inner/8,0]) door_hole_punch();
+    }
+    difference(){
+        floor_collider_geom();
+        difference() {
+            floor_cutout_geom();
+            outer_wall_geom_assembly();
+        }
+    }
+    translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) door_collider();
+}
+
+//room103_collider(); 
 //room103_assembly();

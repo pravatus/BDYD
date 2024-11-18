@@ -160,16 +160,20 @@ module walkway_floor() {
             ,h=wall_thickness);
 }
 
-module walkway_ceiling() {
+module walkway_ceiling_assembly() {
     translate([0,0,corridor_height]) 
     difference() { 
-        rect_tube(size=wall_size_outer
-            ,wall=floor_width
-            ,rounding=wall_rounding_outer
-            ,irounding=floor_rounding_inner
-            ,h=wall_thickness);
+        walkway_ceiling_geom();
         ceiling_rail_led();
     }
+}
+
+module walkway_ceiling_geom() {
+   rect_tube(size=wall_size_outer
+       ,wall=floor_width
+       ,rounding=wall_rounding_outer
+       ,irounding=floor_rounding_inner
+       ,h=wall_thickness);
 }
 
 module ceiling_rail_led() {
@@ -296,7 +300,7 @@ module walkway_geom() {
     inner_wall_assembly();
     outer_wall_assembly(); 
     walkway_floor();
-    walkway_ceiling();
+    walkway_ceiling_assembly();
 }
 
 module walkway_assembly() {
@@ -327,5 +331,34 @@ module walkway_rail() {
     sweep(rect([handle_width/2,handle_width],chamfer=default_chamfer),path,closed=true);
 }
 
+module walkway_collider() {
+    translate([0,0,corridor_height]) walkway_ceiling_geom();
+    walkway_floor();
+    difference() {
+        outer_wall_geom();
+        // punch door holes
+        translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_hole_punch();
+        rotate([0,0,90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_hole_punch();
+        rotate([0,0,180]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_hole_punch();
+        rotate([0,0,-90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_hole_punch();
+    }
+    translate([0,0,-wall_thickness]) 
+        rect_tube(size=wall_size_inner,wall=wall_thickness,rounding=wall_rounding_inner,h=wall_height);
+    translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_collider();
+    rotate([0,0,90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_collider();
+    rotate([0,0,180]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_collider();
+    rotate([0,0,-90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) door_collider();
+}
+
+module handle_colliders() {
+    // doors
+    translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) the_handle_collider();
+    rotate([0,0,90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) the_handle_collider();
+    rotate([0,0,180]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) the_handle_collider();
+    rotate([0,0,-90]) translate([wall_size_outer/2-wall_thickness/2,wall_size_inner/8,0]) the_handle_collider();
+}
+
+//handle_colliders();
+//walkway_collider(); 
 //walkway_assembly();
 //the_abyss();

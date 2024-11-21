@@ -67,7 +67,7 @@ module couch_pillow_backrest() {
     ,h=couch_backrest_height);
 }
 
-module couch_pillow_seat_() {
+module couch_pillow_seat() {
     translate([0,0,couch_base_height]) rect_tube(size=meta_couch_size,wall=couch_depth
     ,rounding=[couch_rounding_inner2 // big bend
     ,couch_rounding_inner1
@@ -88,6 +88,13 @@ module couch_base_cut() {
             magic_distance+wall_thickness*4,
             2]);
 
+    mirror([1,0,0]) translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4,
+            2]);
+
     translate([0,
         wall_size_outer/2-2,
         0]) 
@@ -101,17 +108,44 @@ module couch_base_cut() {
         cuboid([wall_thickness*5,
             4,
             2]);
-        
-    translate([-wall_size_outer/4,
-        0,
-        0]) 
-        cuboid([wall_size_outer/2,
-            wall_size_outer,
-            2]);
 }
 
+module pillow_cuts_small_corner() {
+    // small corner 
+    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
+        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
+        ,0])
+        cuboid([15
+            ,seam_depth
+            ,2]);
 
-module pillow_cuts() {
+    // small corner
+    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
+        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
+        ,0])
+        rotate([0,0,45]) cuboid([seam_depth
+            ,15
+            ,2]);
+
+    // small corner
+    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
+        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
+        ,0])
+        cuboid([seam_depth
+            ,15
+            ,2]);
+
+    // small mid section
+    translate([(meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5)/2
+    +(wall_thickness*2.5+couch_depth)/2
+        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5 // end-table
+        ,0])
+        cuboid([seam_depth
+            ,15
+            ,2]);
+}
+
+module pillow_cuts_big_corner() {
     // corner cut
     translate([meta_couch_size/2-wall_rounding_outer+room103_walkway_width+wall_thickness
         ,meta_couch_size/2-wall_rounding_outer+room103_walkway_width+wall_thickness
@@ -151,43 +185,17 @@ module pillow_cuts() {
         rotate([0,0,-67.5]) cuboid([seam_depth,
             ,15
             ,2]);
-
-    // small corner 
-    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
-        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
-        ,0])
-        cuboid([15
-            ,seam_depth
-            ,2]);
-
-    // small corner
-    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
-        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
-        ,0])
-        rotate([0,0,45]) cuboid([seam_depth
-            ,15
-            ,2]);
-
-    // small corner
-    translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
-        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
-        ,0])
-        cuboid([seam_depth
-            ,15
-            ,2]);
-
-    // small mid section
-    translate([(meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5)/2
-    +(wall_thickness*2.5+couch_depth)/2
-        ,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5 // end-table
-        ,0])
-        cuboid([seam_depth
-            ,15
-            ,2]);
 }
 
 module couch_end_tables() { 
     translate([wall_size_outer/2-2,
+        -wall_size_inner/8+0.5,
+        0.5]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4+2*couch_depth-1,
+            1]);
+
+    mirror([1,0,0]) translate([wall_size_outer/2-2,
         -wall_size_inner/8+0.5,
         0.5]) 
         cuboid([4,
@@ -201,6 +209,13 @@ module couch_end_tables() {
             magic_distance+wall_thickness*4+2*seam_depth,
             1]);
 
+    mirror([1,0,0]) translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0.5]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4+2*seam_depth,
+            1]);
+
     translate([0,
         wall_size_outer/2-2,
         0.5]) 
@@ -214,17 +229,17 @@ module couch_end_tables() {
         cuboid([wall_thickness*5+2*couch_depth,
             4,
             1]);
-        
-    translate([-wall_size_outer/4,
-        0,
-        0.5]) 
-        cuboid([wall_size_outer/2,
-            wall_size_outer,
-            1]);
 }
 
 module couch_led_cut() { 
     translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0.5]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4+2*seam_depth,
+            1]);
+
+    mirror([1,0,0]) translate([wall_size_outer/2-2,
         -wall_size_inner/8,
         0.5]) 
         cuboid([4,
@@ -243,13 +258,6 @@ module couch_led_cut() {
         0.5]) 
         cuboid([wall_thickness*5+2*seam_depth,
             4,
-            1]);
-        
-    translate([-wall_size_outer/4,
-        0,
-        0.5]) 
-        cuboid([wall_size_outer/2,
-            wall_size_outer,
             1]);
 }
 
@@ -267,12 +275,27 @@ module couch_base_geom() {
 
 module pillow_geom() {
     couch_pillow_backrest();
-    couch_pillow_seat_();
+    couch_pillow_seat();
 }
 
 module pillow_cut_geom() {
     couch_end_tables();
-    pillow_cuts();
+    pillow_cuts_big_corner();
+    pillow_cuts_small_corner();
+    mirror([1,0,0]) pillow_cuts_small_corner();
+    mirror([0,1,0]) mirror([1,0,0]) pillow_cuts_small_corner();
+    
+    right_magic=-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5;
+    left_magic=-(magic_distance+wall_thickness*4+2*couch_depth-wall_size_inner/4)/2;
+    magic_add=(-right_magic+left_magic)/2;
+    magic_offset=left_magic-magic_add;
+    mirror([1,0,0]) mirror([0,1,0]) translate([meta_couch_size/2-room103_wall_rounding_outer1+room103_walkway_width-wall_thickness*1.5
+        //,-meta_couch_size/2+room103_wall_rounding_outer1-room103_walkway_width+wall_thickness*1.5
+        ,magic_offset
+        ,0])
+        cuboid([15
+            ,seam_depth
+            ,2]);
 }
 
 module pillow_geom_cut() {

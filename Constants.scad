@@ -38,6 +38,8 @@ wall_rounding_outer=wall_rounding_inner+corridor_width+wall_thickness;
 echo("wall_rounding_outer",wall_rounding_outer);
 wall_size_outer=wall_size_inner+corridor_width*2+wall_thickness*2;
 echo("wall_size_outer",wall_size_outer);
+wall_size_outer_x=wall_size_outer*1.5;
+echo("wall_size_outer_x",wall_size_outer_x);
 
 window_height=corridor_height/2;
 echo ("window_height",window_height);

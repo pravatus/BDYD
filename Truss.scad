@@ -160,6 +160,15 @@ module four_trusses() {
     translate([0,truss_final_height*2,0]) rotate([-90,0,0]) truss_segment();
     translate([0,truss_final_height*3,0]) rotate([-90,0,0]) truss_segment();
 }
+
+module five_trusses() {
+    rotate([-90,0,0]) truss_segment();
+    translate([0,truss_final_height,0]) rotate([-90,0,0]) truss_segment();
+    translate([0,truss_final_height*2,0]) rotate([-90,0,0]) truss_segment();
+    translate([0,truss_final_height*3,0]) rotate([-90,0,0]) truss_segment();
+    translate([0,truss_final_height*4,0]) rotate([-90,0,0]) truss_segment();
+}
+
 //four_trusses();
 
 //scale(truss_scale) translate([0,-truss_final_height*2,-truss_chord_spacing/2-truss_chord_diameter]) four_trusses();

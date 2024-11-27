@@ -14,7 +14,7 @@
 include <Speakers.scad>
 include <Truss.scad>
 
-$fn=4; // low poly truss
+$fn=8; // low poly truss
 
 module Room103_fn8() {
     scale(0.1) translate([0,-truss_final_height*2,-truss_chord_spacing/2-truss_chord_diameter]) four_trusses();
@@ -43,4 +43,31 @@ module Room103_fn8() {
                 speak_rig();
 }
 
-scale(woof_scale) Room103_fn8();
+module _Room103_fn8() {
+    scale(0.1) translate([0,-truss_final_height*2.5,-truss_chord_spacing/2-truss_chord_diameter]) five_trusses();
+
+    ycopies(l=truss_final_height/10*5-truss_chord_spacing*3/10, n=2) 
+        scale(0.1) rigging();
+    ycopies(l=truss_final_height/10*4-truss_chord_spacing*3/10, n=2) 
+        scale(0.1) rigging();
+
+    translate([0,(truss_final_height/10*4-truss_chord_spacing*3/10)/2,-7])
+        translate([0,0,-0.6])
+            woof_rig();
+
+    translate([0,-(truss_final_height/10*4-truss_chord_spacing*3/10)/2,-7])
+        mirror([0,1,0])
+            translate([0,0,-0.6]) 
+                woof_rig();
+
+    translate([0,-(truss_final_height/10*5-truss_chord_spacing*3/10)/2,-7])
+        translate([0,0,-0.6]) 
+            speak_rig();
+
+    translate([0,(truss_final_height/10*5-truss_chord_spacing*3/10)/2,-7])
+        mirror([0,1,0]) 
+            translate([0,0,-0.6]) 
+                speak_rig();
+}
+
+translate([-wall_size_outer/5*4,0,corridor_height]) scale(woof_scale) _Room103_fn8();

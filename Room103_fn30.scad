@@ -32,4 +32,20 @@ module Room103_fn30() {
             unrigged_speakers();
 }
 
-//scale(woof_scale) Room103_fn30();
+module _Room103_fn30() {
+    translate([0,(truss_final_height/10*4-truss_chord_spacing*3/10)/2,-7])
+        unrigged_woofers();
+
+    translate([0,-(truss_final_height/10*4-truss_chord_spacing*3/10)/2,-7])
+        mirror([0,1,0]) 
+            unrigged_woofers();
+
+    translate([0,-(truss_final_height/10*5-truss_chord_spacing*3/10)/2,-7])
+        unrigged_speakers();
+
+    translate([0,(truss_final_height/10*5-truss_chord_spacing*3/10)/2,-7])
+        mirror([0,1,0]) 
+            unrigged_speakers();
+}
+
+translate([-wall_size_outer/5*4,0,corridor_height]) scale(woof_scale) _Room103_fn30();

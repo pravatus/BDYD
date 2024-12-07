@@ -289,4 +289,8 @@ module dj_stuff() {
 
 //translate([-wall_size_inner/8*3.5,-wall_size_inner/8,wall_thickness*1])
 //    dj_stuff();
+<<<<<<< HEAD
 //build_deck();
+=======
+build_deck();
+>>>>>>> 2111e764ab3f13db50a779a7a14367b9c4467e24

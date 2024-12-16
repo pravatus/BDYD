@@ -13,6 +13,7 @@
 
 include <Constants.scad>
 include <Door1.scad>
+include <FLX4.scad>
 include <WallSconce2.scad>
 include <Room103Couch.scad>
 
@@ -661,8 +662,11 @@ module build_room103() {
     }
 }
 
+//translate([-wall_size_inner/8*5,wall_size_inner/4,wall_thickness*4])
+//    dj_stuff();
+
 //pillow_geom_cut();
 //build_room103_collider();
-//build_room103();
+build_room103();
 //translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) the_handle_collider();
 //outer_wall_slope_seam_cutout();

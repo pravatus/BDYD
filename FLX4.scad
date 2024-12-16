@@ -28,14 +28,22 @@ ddj_jog_wheel_h=1.5;
 
 ddj_performance_pad=1.7;
 ddj_performance_pad_height=0.2;
-ddj_pad_inner=1.6;
+ddj_pad_inner=ddj_performance_pad-0.1;
 ddj_pad_offset_y=2.2;
 ddj_pad_offset_x=2.2;
+
+ddj_function_key=0.4;
+ddj_function_key_inner=ddj_function_key-0.1;
 
 ddj_qpp_botan_height=ddj_performance_pad_height;
 ddj_qpp_botan=2.2;
 ddj_qpp_botan_inset=0.1;
 ddj_qpp_botan_inset_ang=30;
+
+ddj_loop_btn=1.4;
+ddj_loop_btn_height=0.2;
+ddj_loop_btn_inset=0.3;
+ddj_loop_btn_inset_ang=15;
 
 ddj_knob_height=1.6;
 ddj_knob_base_width=1.5;
@@ -121,7 +129,7 @@ module ddj_cue_play_pause() {
         cyl(l=ddj_qpp_botan_height, d=ddj_qpp_botan, chamfer2=ddj_qpp_botan_inset, chamfang2=ddj_qpp_botan_inset_ang, orient=UP, center=false);
 }
 
-module before_flip_adds() {
+module before_flip_jog_wheel() {
     // jog wheel in two parts
     translate([1.3,4.6,0])
     translate([ddj_jog_wheel_inset_outer/2,ddj_jog_wheel_inset_outer/2,0]) // 0
@@ -133,46 +141,50 @@ module before_flip_adds() {
     // DEBUG ONLY
     //rotate([0,0,360/30/2])
     cylinder(h=ddj_jog_wheel_inset_drop, d1=ddj_jog_wheel_outer, d2=ddj_jog_wheel_outer);
+}
 
+module before_flip_adds() {
+    before_flip_adds_function_buttons();
+    
     // 8 perfomance pads
-    translate([4.2,21.6,0])
+    translate([4.2,21.2,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2,21.6,0])
+    translate([4.2,21.2,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2,21.6+ddj_pad_offset_y,0])
+    translate([4.2,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2,21.6+ddj_pad_offset_y,0])
+    translate([4.2,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x,21.6,0])
+    translate([4.2+ddj_pad_offset_x,21.2,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x,21.6,0])
+    translate([4.2+ddj_pad_offset_x,21.2,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x*2,21.6,0])
+    translate([4.2+ddj_pad_offset_x*2,21.2,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x*2,21.6,0])
+    translate([4.2+ddj_pad_offset_x*2,21.2,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x*2,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x*2,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x*2,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x*2,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x*3,21.6,0])
+    translate([4.2+ddj_pad_offset_x*3,21.2,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x*3,21.6,0])
+    translate([4.2+ddj_pad_offset_x*3,21.2,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
-    translate([4.2+ddj_pad_offset_x*3,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x*3,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_performance_pad,ddj_performance_pad,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
-    translate([4.2+ddj_pad_offset_x*3,21.6+ddj_pad_offset_y,0])
+    translate([4.2+ddj_pad_offset_x*3,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
     translate([21.6,6.5,0.1])
@@ -193,13 +205,11 @@ module before_flip_adds() {
         ddj_knoblet();
 }
 
-
 module no_flip_adds() {
     translate([ddj_width/2,2.2/2+23.8,0.1]) rotate([0,0,90]) sliding_potentiometer();
     
     translate([ddj_width/2,2.2/2+23.8,0.1]) rotate([0,0,90]) sliding_potentiometer();
 
-    
     translate([17.8,6.5+ddj_knob_offset1_y,0.1])
         ddj_knob();    
     translate([17.8,6.5+ddj_knob_offset1_y*4,0.1])
@@ -216,30 +226,51 @@ module no_flip_adds() {
 
     translate([32.7,19.9,0]) ddj_cue_play_pause();
     translate([32.7,22.7,0]) ddj_cue_play_pause();
+
+    translate([1.2+ddj_qpp_botan/2,1.8,0]) ddj_loop_btn();
+    translate([1.2+ddj_qpp_botan/2+ddj_loop_btn*1.8,1.8,0]) ddj_loop_btn();
+
+    translate([32.7+ddj_qpp_botan/2,1.8,0]) ddj_loop_btn();
+    translate([32.7+ddj_qpp_botan/2+ddj_loop_btn*1.8,1.8,0]) ddj_loop_btn();
+    
+    translate([13.6+0.8,21.6,0]) sliding_potentiometer_two();
+    translate([13.6+0.8+31.5,21.6,0]) sliding_potentiometer_two();
 }
 
 module the_deck_base() {
     cuboid([ddj_width,ddj_length,ddj_height], rounding=1, except=[TOP, BOTTOM], p1=[0,0,-ddj_height]);
 }
 
-module before_flip(){
+module before_flip_base(){
     difference() {
         // the actual deck
         the_deck_base(); 
         before_flip_inset();
     }
-    before_flip_adds(); 
 }
 
-module build_deck() {
-    difference() {
-        translate([ddj_width,0,0]) mirror([1,0,0]) before_flip();
-        before_flip_inset();
-    }
+module build_deck_jog_wheel() {
+    translate([ddj_width,0,0]) mirror([1,0,0]) before_flip_jog_wheel();
+    before_flip_jog_wheel();
+}
+
+module build_deck_buttons() {
+    translate([ddj_width,0,0]) mirror([1,0,0]) before_flip_adds(); 
     before_flip_adds();
     
     // cue, play/pause buttons
-    translate([ddj_width,0,0]) mirror([1,0,0])  no_flip_adds();
+    translate([ddj_width,0,0]) mirror([1,0,0]) no_flip_adds();
+}
+
+module build_deck() {
+
+}
+
+module build_deck_base() {
+    difference() {
+        translate([ddj_width,0,0]) mirror([1,0,0]) before_flip_base();
+        before_flip_inset();
+    }
 }
 
 // table dirty+quick
@@ -269,28 +300,96 @@ module sliding_potentiometer() {
         cube([3,ddj_knob_pos_indicator_width,4],center=true);
     }
     
-    diff() prismoid(size1=[2.2-ddj_knob_pos_indicator_width/2,1-ddj_knob_pos_indicator_width],size2=[2-ddj_knob_pos_indicator_width/2,0.7-ddj_knob_pos_indicator_width]
-    ,h=1.4-ddj_knob_pos_indicator_width/4,$fn=12) {
-        edge_profile([TOP], excess=0.1) {
+    diff() prismoid(size1=[2.2-ddj_knob_pos_indicator_width/2,1-ddj_knob_pos_indicator_width]
+        ,size2=[2-ddj_knob_pos_indicator_width/2,0.7-ddj_knob_pos_indicator_width]
+        ,h=1.4-ddj_knob_pos_indicator_width/4,$fn=12) {
+        edge_profile([TOP],excess=0.1) {
             mask2d_roundover(h=0.05-ddj_knob_pos_indicator_width/4,mask_angle=$edge_angle);
         }
     };
 }
 
-module dj_stuff_prescale() {
-    build_dj_table();
-    translate([dj_table_inset_add/2,0,0]) // nudge forward
-    translate([ddj_length,-ddj_width/2-dj_table_ddj_offset,dj_table_height]) rotate([0,0,90]) build_deck();
+module sliding_potentiometer_two_meta() {
+    difference() {
+        diff() translate([0,0,0.55-mesh_fix]) cuboid([1.6,0.5,0.9+mesh_fix]) 
+            edge_profile([TOP],excess=0.1,$fn=12) {
+                mask2d_roundover(h=0.05,mask_angle=$edge_angle);
+            };
+        translate([0,0,0.9+1.1-0.475]) cuboid([2,0.05,1.1]);
+    }
+    
+    cuboid([1.6,1.9,0.2],rounding=0.2,except=[TOP,BOTTOM],$fn=12);
+
+    difference() {
+        mirror([0,1,0]) translate([0,0.25,0.1]) zrot(90) xrot(90)
+            linear_extrude(height=1.6,center=true)
+                mask2d_roundover(r=0.5,$fn=15);
+    }
+    
+    difference() {
+        translate([0,0.25,0.1]) zrot(90) xrot(90)
+            linear_extrude(height=1.6,center=true)
+                mask2d_roundover(r=0.5,$fn=15);
+    }
+}
+
+module sliding_potentiometer_two() {
+    translate([0,0,0.1]) sliding_potentiometer_two_meta();
+}
+
+module before_flip_adds_function_buttons() {
+    // 4 function buttons
+    translate([4.2,19.8,0])
+    cuboid([ddj_performance_pad,ddj_function_key,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
+    translate([4.2,19.8,0])
+    cuboid([ddj_pad_inner,ddj_function_key_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
+    
+    translate([4.2+ddj_pad_offset_x,19.8,0])
+    cuboid([ddj_performance_pad,ddj_function_key,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
+    translate([4.2+ddj_pad_offset_x,19.8,0])
+    cuboid([ddj_pad_inner,ddj_function_key_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
+    
+    translate([4.2+ddj_pad_offset_x*2,19.8,0])
+    cuboid([ddj_performance_pad,ddj_function_key,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
+    translate([4.2+ddj_pad_offset_x*2,19.8,0])
+    cuboid([ddj_pad_inner,ddj_function_key_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
+    
+    translate([4.2+ddj_pad_offset_x*3,19.8,0])
+    cuboid([ddj_performance_pad,ddj_function_key,ddj_performance_pad_height], chamfer=0.02, except=[BOTTOM, TOP], p1=[0,0,0]);
+    translate([4.2+ddj_pad_offset_x*3,19.8,0])
+    cuboid([ddj_pad_inner,ddj_function_key_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
+    
+}
+
+module ddj_loop_btn() {
+    translate([0,ddj_loop_btn/2,0]) 
+        cyl(l=ddj_loop_btn_height
+            ,d=ddj_loop_btn
+            ,chamfer2=ddj_loop_btn_inset
+            ,chamfang2=ddj_loop_btn_inset_ang
+            ,orient=UP
+            ,center=false
+            ,$fn=15);
 }
 
 module dj_stuff() {
     scale(0.01) dj_stuff_prescale();
 }
 
-//translate([-wall_size_inner/8*3.5,-wall_size_inner/8,wall_thickness*1])
+module dj_stuff_prescale() {
+    build_dj_table();
+    translate([dj_table_inset_add/2,0,0]) // nudge inward
+        translate([ddj_length,-ddj_width/2-dj_table_ddj_offset,dj_table_height]) rotate([0,0,90]) 
+            build_deck_base();
+    
+    translate([dj_table_inset_add/2,0,0]) // nudge inward
+        translate([ddj_length,-ddj_width/2-dj_table_ddj_offset,dj_table_height]) rotate([0,0,90]) 
+            build_deck_buttons();
+    
+    translate([dj_table_inset_add/2,0,0]) // nudge inward
+        translate([ddj_length,-ddj_width/2-dj_table_ddj_offset,dj_table_height]) rotate([0,0,90]) 
+            build_deck_jog_wheel();
+}
+
+//translate([-wall_size_inner/8*5,wall_size_inner/4,wall_thickness*4])
 //    dj_stuff();
-<<<<<<< HEAD
-//build_deck();
-=======
-build_deck();
->>>>>>> 2111e764ab3f13db50a779a7a14367b9c4467e24

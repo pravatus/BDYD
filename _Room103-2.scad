@@ -15,6 +15,7 @@ include <Constants.scad>
 include <Door1.scad>
 include <WallSconce2.scad>
 include <Room103Couch.scad>
+include <TL.scad>
 
 module outer_wall_geom() {
     //translate([-wall_size_outer/4,0,0]) 
@@ -52,25 +53,18 @@ module sconces() {
                 ,1.70])
                 rotate([90,0,0])
                     wall_sconce2();
-        
-    translate([0,wall_size_outer/2-wall_thickness,1.70+wall_thickness*4]) 
-            rotate([90,0,0]) 
-                wall_sconce2();
 
-    translate([-wall_size_inner/4,0,0]) // back
-        translate([0,wall_size_outer/2-wall_thickness,1.70+wall_thickness*4]) 
-            rotate([90,0,0]) 
-                wall_sconce2();
+    translate([-wall_size_outer/4-1,0,0]) // back
+        translate([0,wall_size_outer/2-wall_thickness,1.4+wall_thickness*4]) 
+            rotate([90,90,0])
+                ycopies(2, n=9) 
+                    build_tl();
 
-    translate([-wall_size_inner/4,0,0]) // back
-        translate([0,-wall_size_outer/2+wall_thickness,1.70+wall_thickness*4])
-            rotate([270,0,0]) 
-                wall_sconce2();
-
-    translate([wall_size_inner/4,0,0]) // back
-        translate([0,-wall_size_outer/2+wall_thickness,1.70+wall_thickness*4])
-            rotate([270,0,0])
-                wall_sconce2();
+    translate([-wall_size_outer/4,0,0]) // back
+        translate([0,-wall_size_outer/2+wall_thickness,1.4+wall_thickness*4])
+            rotate([270,90,0])
+                ycopies(2, n=10) 
+                    build_tl();
 }
 
 module walkway_geom() {
@@ -663,6 +657,6 @@ module build_room103() {
 
 //pillow_geom_cut();
 //build_room103_collider();
-//build_room103();
+build_room103();
 //translate([wall_size_outer/2-wall_thickness/2,-wall_size_inner/8,0]) the_handle_collider();
 //outer_wall_slope_seam_cutout();

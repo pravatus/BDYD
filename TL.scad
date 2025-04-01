@@ -13,15 +13,12 @@
 
 include <Constants.scad>
 
-$fn=8;
-
-tl_fixture_tl_l=1.22/2;
+tl_fixture_tl_l=1.22;
 tl_fixture_tl_w=0.0254;
 tl_fixture_w=0.112;
 tl_fixture_h=0.054;
 tl_fixture_wall=0.005;
 tl_fixture_l=tl_fixture_wall*4+tl_fixture_tl_l;
-
 
 module half_tl() {
 difference() {
@@ -38,7 +35,7 @@ difference() {
 }
 
 translate([0,0,tl_fixture_tl_w/2+tl_fixture_wall*2])
-    rotate([0,90,0]) cyl(d=tl_fixture_tl_w, l=tl_fixture_tl_l, chamfer=tl_fixture_tl_w/10);
+    rotate([0,90,0]) cyl(d=tl_fixture_tl_w, l=tl_fixture_tl_l, chamfer=tl_fixture_tl_w/10, $fn=8);
 
 translate([0,0,tl_fixture_wall/2])
     cube([tl_fixture_l,tl_fixture_w/2,tl_fixture_wall+0.002], center=true);

@@ -20,11 +20,11 @@ $fn = 30; // segments in a circle (360/30 = 12 degrees)
 
 phi=(1 + sqrt(5)) / 2;
 
-corridor_height=4;
+corridor_height=6.5;
 corridor_width=2.5;
 mesh_fix=0.002;
-seam_depth=0.005;
-seam_width=0.02;
+seam_depth=0.001;
+seam_width=0.005;
 wall_size_inner=12;
 wall_thickness=0.2;
 rail_led_width=0.2;

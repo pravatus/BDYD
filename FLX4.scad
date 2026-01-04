@@ -279,8 +279,10 @@ module build_dj_table() {
         // main structure
         rotate([0,90,0]) rect_tube(size=[dj_table_height*2,dj_table_width], wall=dj_table_wall, rounding=dj_table_rounding, h=dj_table_depth);
         // led
-        translate([dj_table_depth-dj_table_led_depth,0,0]) rotate([0,90,0]) rect_tube(size=[dj_table_height*2-dj_table_led_offset,dj_table_width-dj_table_led_offset], wall=dj_table_led_width, rounding=dj_table_rounding-dj_table_led_offset/2, h=dj_table_led_depth);
-            
+        //translate([dj_table_depth-dj_table_led_depth,0,0]) rotate([0,90,0]) rect_tube(size=[dj_table_height*2-dj_table_led_offset,dj_table_width-dj_table_led_offset], wall=dj_table_led_width, rounding=dj_table_rounding-dj_table_led_offset/2, h=dj_table_led_depth);
+        translate([dj_table_depth-dj_table_led_depth,0,0]) rotate([0,90,0]) rect_tube(size=[dj_table_height*2+mesh_fix,dj_table_width+mesh_fix], wall=dj_table_led_width, rounding=dj_table_rounding, h=dj_table_led_depth+mesh_fix);
+        translate([dj_table_depth-dj_table_led_depth,0,0]) rotate([0,90,0]) rect_tube(size=[dj_table_height*2-dj_table_led_offset*2-mesh_fix,dj_table_width-dj_table_led_offset*2-mesh_fix], wall=dj_table_led_width, rounding=dj_table_rounding-dj_table_led_offset, h=dj_table_led_depth+mesh_fix);
+
         // nb: cut-out has z-fix added to height
         translate([0,-dj_table_ddj_offset,dj_table_height-ddj_height/2+mesh_fix]) rotate([0,0,90]) cuboid([ddj_width+dj_table_inset_add,(ddj_length+dj_table_inset_add)*2,ddj_height+mesh_fix], rounding=1+dj_table_inset_add/2, except=[TOP, BOTTOM]);
 
@@ -391,5 +393,7 @@ module dj_stuff_prescale() {
             build_deck_jog_wheel();
 }
 
-//translate([-wall_size_inner/8*5,wall_size_inner/4,wall_thickness*4])
-//    dj_stuff();
+translate([-wall_size_inner/8*5,wall_size_inner/4,wall_thickness*4])
+    dj_stuff();
+
+//build_dj_table();

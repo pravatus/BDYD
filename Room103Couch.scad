@@ -95,6 +95,13 @@ module couch_base_cut() {
             magic_distance+wall_thickness*4,
             2]);
 
+    rotate([0,0,180]) translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4,
+            2]);
+
     translate([0,
         wall_size_outer/2-2,
         0]) 
@@ -109,6 +116,8 @@ module couch_base_cut() {
             4,
             2]);
 }
+
+
 
 module pillow_cuts_small_corner() {
     // small corner 
@@ -216,6 +225,13 @@ module couch_end_tables() {
             magic_distance+wall_thickness*4+2*seam_depth,
             1]);
 
+    rotate([0,0,180]) translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0.5]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4+2*seam_depth,
+            1]);
+
     translate([0,
         wall_size_outer/2-2,
         0.5]) 
@@ -240,6 +256,13 @@ module couch_led_cut() {
             1]);
 
     mirror([1,0,0]) translate([wall_size_outer/2-2,
+        -wall_size_inner/8,
+        0.5]) 
+        cuboid([4,
+            magic_distance+wall_thickness*4+2*seam_depth,
+            1]);
+
+    rotate([0,0,180]) translate([wall_size_outer/2-2,
         -wall_size_inner/8,
         0.5]) 
         cuboid([4,

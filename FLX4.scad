@@ -187,20 +187,29 @@ module before_flip_adds() {
     translate([4.2+ddj_pad_offset_x*3,21.2+ddj_pad_offset_y,0])
     cuboid([ddj_pad_inner,ddj_pad_inner,ddj_performance_pad_height], p1=[(ddj_performance_pad-ddj_pad_inner)/2,(ddj_performance_pad-ddj_pad_inner)/2,0]);
 
+
+    // mid low high
     translate([21.6,6.5,0.1])
         ddj_knob();
     translate([21.6,6.5+ddj_knob_offset1_y,0.1])
         ddj_knob();
-    translate([17.8,6.5+ddj_knob_offset1_y*5,0.1])
-        ddj_knob();
     translate([21.6,6.5+ddj_knob_offset1_y*2,0.1])
         ddj_knob();
 
+    // hi-low pass
+    translate([21.6,6.5+ddj_knob_offset1_y*3,0.1])
+        ddj_knob();
+
+    // headphone, effect 
+    translate([17.8,6.5+ddj_knob_offset1_y*5,0.1])
+        ddj_knob();
+        
     // vol
     translate([21.6,8.5+ddj_knob_offset1_y*4,0.1])
         translate([ddj_knob_base_width/2,0.5,0]) 
         sliding_potentiometer();
 
+    // trim
     translate([21.6,3.8,0.1])
         ddj_knoblet();
 }
@@ -214,8 +223,6 @@ module no_flip_adds() {
         ddj_knob();    
     translate([17.8,6.5+ddj_knob_offset1_y*4,0.1])
         ddj_knob();   
-    translate([21.6,6.5+ddj_knob_offset1_y*3,0.1])
-        ddj_knob();
  
     // THIS IS ACCURATE FOR X   
     translate([28.9,3.8,0.1])
@@ -393,7 +400,7 @@ module dj_stuff_prescale() {
             build_deck_jog_wheel();
 }
 
-translate([-wall_size_inner/8*5,wall_size_inner/4,wall_thickness*4])
-    dj_stuff();
+//translate([-wall_size_inner/8*5,0,wall_thickness*4])
+//    dj_stuff();
 
 //build_dj_table();
